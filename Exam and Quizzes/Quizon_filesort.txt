@@ -1,0 +1,49 @@
+  GNU nano 6.2                                                                                                                        Quizon_filesort.txt
+#!/bin/bash
+
+
+create_directories()
+{
+
+
+dir_array=("Documents" "Images" "Music" "Others")
+
+current_dir=$(pwd)
+echo "The current directory is: $current_dir"
+
+for dir in "${dir_array[@]}"; do
+        if [ ! -d "$current_dir/$dir" ]; then
+                mkdir "$current_dir/$dir"
+                echo "$dir created"
+        else
+                echo "$dir already exists"
+        fi
+done
+}
+
+echo "CREATING DIRECTORIES"
+create_directories
+
+echo "MOVING FILES"
+for file in * ; do
+        if [ -f "$file" ]; then
+                file_name="$file"
+                file_extension="${file_name##*.}"
+                echo "$file_extension"
+                if [[ "$file_extension" == "pdf" || "$file_extension" == "txt" ]]; then
+                        echo mv  "$file" "Documents/"
+                         mv  "$file" "Documents/"
+                elif [[ "$file_extension" == "jpg" || "$file_extension" == "png" ]]; then
+                        echo mv "$file" "Images/"
+                        mv "$file" "Images/"
+                elif [[ "$file_extension" == "mp3" || "$file_extension" == "wav" ]]; then
+                        echo mv "$file" "Music/"
+                        mv "$file" "Music/"
+                else
+                        echo mv  "$file" "Others/"
+                        mv "$file" "Others/"
+                fi
+        else
+                echo "$file is  not a file. No move done"
+        fi
+done
